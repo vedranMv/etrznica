@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+@import url("searchResults.css");
+@import url("adminP.css");
+
+body
+{
+    /*background-color: #CECECE;*/
+    background-image:   url("../imgs/food-sunset-love-field.jpg");
+    background-repeat:  no-repeat;
+    color:              #DDD;
+    font-family: fantasy;
+    line-height: 20px;
+}
+
+a
+{
+	font-family: fantasy;
+     color: #BBB;
+}
+a:visited
+{
+     color: #BBB;
+}
+a:hover
+{
+     color: #FFF;
+     
+}
+
+form
+{
+	margin-top: 30px;
+}
+
+#cont_header
+{
+    width:              600px;
+    height:             150px;
+    margin-left:        auto;
+    margin-right:       auto;
+}
+
+#cont_user
+{
+	float:             right;
+	width:             auto;
+	height:            50px;
+	z-index:           1;
+	background-image:  url("../imgs/black10.png");
+	background-repeat: repeat;
+	margin-top:        -15px;
+	border-radius:     5px;
+	border: 1px dashed #454545;
+	color:             #FFF;
+	padding:           5px;
+	padding-top:       15px;
+	text-align:        center;
+	overflow:          hidden;
+}
+#cont_user:hover
+{
+	background-image: url("../imgs/black30.png");
+	color:     #FFF;
+}
+#cont_user > a
+{
+	color:#454545;
+	text-decoration: none;
+}
+
+#cont_user:hover > a
+{
+    color: #FFF;
+}
+#cont_user:hover > a:hover
+{
+    color: #EFEFEF;
+}
+
+.link_menu
+{
+	border-bottom: 1px solid #454545;
+	display: block;
+	margin-bottom: 5px ;
+}
+
+#cont_wrapper
+{
+	margins:   auto;
+	width:     auto;
+	height:    auto:
+	border:         1px solid #454545;
+    border-radius:  10px;
+}
+
+#cont_brzo_trazenje
+{
+    /*border:         1px solid #eeeeec;*/
+    border-radius:  10px;
+    float:          left;
+    min-width:      250px;
+    background-image: url("../imgs/black30.png");
+}
+
+	.search_box
+	{
+	    width:  230px;
+	    margin: 10px;
+	    font-size: 16px;
+	}
+	
+	#cont_rezultati
+	{
+	    /*min-width:     230px;*/
+	    margin:        10px;
+	    min-height:    400px;
+	    overflow-y:    scroll;
+	    border: 1px solid #454545;
+        /*border-radius: 10px;*/
+	}
+	
+#cont_pregled
+{
+    border:         1px solid #454545;
+    background-image: url("../imgs/black30.png");
+    border-radius:  10px;
+    float:          left;
+    margin-left:    20px;
+    min-width:      400px;
+    width:          70%;
+    min-height:     400px;
+    padding:        15px;
+    text-align:     justify;
+}
+
+    .proizvod_slika
+    {
+        float:      left;
+        width:      250px;
+        
+    }
+    .proizvod_opis
+    {
+        float:      left;
+        margrin:    auto;
+        max-width:  500px;
+        padding:    10px;
+        
+    }
+    
+    #form_register
+    {
+        padding:    50px;
+        padding-top: 0px;
+    }
+    #form_register > p
+    {
+        background-image: url("../imgs/black10.png");
+        padding: 5px;
+        margin: 5px;
+        text-align: center;
+        font-size: 17px;
+    }
+    
+    #subcont_kontakt
+    {
+        background-image: url("../imgs/black10.png");
+    }
+    #subcont_kontakt > p
+    {
+        margin-left: 20px;
+        padding: 5px;
+    }
+    
+#cont_footer
+{
+    border:         1px solid #454545;
+    border-radius:  10px;
+    height:         70px;
+    width:          100%;
+    margin-top:     50px;
+    margin-bottom:  -40px;
+}
+

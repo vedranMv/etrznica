@@ -1,0 +1,35 @@
+#subcont_prodlist
+{
+	float: left;
+	margin-left:20px;
+	overflow-y: scroll;
+}
+
+#subcont_prodinfo
+{
+	float:         left;
+    padding-left:    20px;
+    margin-left:    20px;
+    border-left:    1px double #454545;
+}
+
+.subcont_proizvodi
+{
+	display:        block;
+    cursor:         default;
+    padding:        5px;
+	border-bottom: 1px solid #454545;
+	max-width:200px;
+	overflow: hidden;
+	cursor: pointer;
+}
+
+#subcont_prodinfo > img
+{
+	width:150px;
+}
+
+#subcont_prodinfo > tr
+{
+    vertical-align:middle;
+}
