@@ -24,9 +24,12 @@
 	cursor: pointer;
 }
 
-#subcont_prodinfo > img
+.img_small
 {
-	width:150px;
+    height: auto; 
+    width: auto; 
+    max-width: 150px; 
+    max-height: 150px;
 }
 
 #subcont_prodinfo > tr

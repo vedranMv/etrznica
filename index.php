@@ -2,7 +2,8 @@
 <html>
 <head>
 <?php
-    include "php/connFile.php";
+require_once "php/connFile.php";
+require_once "php/sessionManager.php";
     $page = "";
     
     //  Get page arguments (page name, filter data...)
@@ -16,15 +17,9 @@
     }
     
     //  Chekc if user is logged in and has an opened session
-    if (isset($_COOKIE['mojDucan_username']))
-        $user = $_COOKIE['mojDucan_username'];
-    else
-        $user = "";
     
-    if (isset($_COOKIE['mojDucan_session']))
-        $session = $_COOKIE['mojDucan_session'];
-    else 
-        $session = "";
+    $user = getUserCookie();
+    $session = getSessionCookie();
         
  ?>
  
@@ -51,7 +46,7 @@
         else
         {
             //  One every page refresh, extend user's session
-            setcookie('mojDucan_session', $session, (time()+60*60),'/');
+            setcookie($sessionCookie, $session, (time()+60*60),'/');
             echo '
             <div id="cont_user" onmouseenter="extend()" onmouseleave="contract()" style="text-align: right;" >
             	<a class="link_menu" href="?page=dodajP"> Dodaj proizvod </a>
@@ -64,9 +59,7 @@
         }
     
     ?>
-
     <div id="cont_header">
-    	
     	<a href="?page=home"><img alt="" src="imgs/title.png"/></a>
     </div>
     <div style="clear:both;"></div>
@@ -90,7 +83,6 @@
 	        	  else
 	        	  {
 	        	      //  We need to access these variables from include file
-	        	      
 	        	      $filt = @explode("=", $qstr[1]);
 	        	      $GLOBALS["overrideFilter"] = $filt[1];
 	        	      
@@ -100,10 +92,7 @@
 	        	      
 	        	      include "php/ponuda.php";
 	        	  }
-	        	
 	        	?>
-				
-	 
 	        </div>
 	    </div>
 	
@@ -111,10 +100,13 @@
 	    <div id="cont_pregled">
 		<?php 
 		  //  Load the page 
-		  if (($page != "") && ($page != "connFile") && file_exists($page.'.php'))
+		  if (($page != "") && ($page != "connFile") && ($page != "ponuda") &&
+		      file_exists($page.'.php')) {
 		      include ($page.'.php');
-		  else
+		  }
+		  else if ($page != "ponuda") {
 		      include ('home.php');
+		  }
 		?>
 	    </div>
 	    

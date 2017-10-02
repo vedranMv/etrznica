@@ -1,7 +1,12 @@
 <?php 
-include "connFile.php";
-include "zupLookup.php";
-//include "confirmSession.php";
+require_once "connFile.php";
+require_once "zupLookup.php";
+require_once "sessionManager.php";
+
+$id = -1;
+if (isset($_POST['id'])) {
+    $id = $_POST['id'];
+}
 
 $nazivP = "";
 //  Chekc for incoming POST arguments
@@ -24,6 +29,10 @@ if (isset($_FILES['slikaP'])) {
     $file_extension = strrchr($img["name"], ".");
 }
 
+//  This shouldn't happen, but anyway, make sure we have id for updating data
+if ($id === (-1)){
+    return;
+}
 
 $errorMsg = "";
 $destination = "";
@@ -57,7 +66,7 @@ else {
 
 if (($nazivP !== "") && ($opisP !== ""))
 {
-    $uid = -1/*checkSession($_COOKIE['mojDucan_username'], $_COOKIE['mojDucan_session'])*/;
+    $uid = sessionToUID(getUserCookie(), getSessionCookie());
     //  Return here is session is not correct
     if ($uid === (-1))
     {
@@ -65,6 +74,16 @@ if (($nazivP !== "") && ($opisP !== ""))
         return;
     }
     else {
+        if ($savedTo !== "") {
+            $stmt = $conHandle->prepare("UPDATE proizvodi SET naziv = ?, opis = ?, slika = ?  WHERE (id = ?)") or die("Error binding");
+            $stmt->bind_param("sssi", $nazivP, $opisP, $savedTo, $id);
+        }else {
+            $stmt = $conHandle->prepare("UPDATE proizvodi SET naziv = ?, opis = ?  WHERE (id = ?)") or die("Error binding");
+            $stmt->bind_param("ssi", $nazivP, $opisP, $id);
+        }
+        
+        // Update product info in database
+        $stmt->execute();
         echo "Promjene spremljene";
     }
 }

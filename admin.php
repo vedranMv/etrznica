@@ -6,17 +6,28 @@ izmjeniti informacije o istima.</p>
 <div id="subcont_prodlist">
 
 <?php 
-include "php/connFile.php";
+require_once "php/connFile.php";
+require_once "php/sessionManager.php";
 
-// Get product information from database
-$stmt = $conHandle->prepare("SELECT id, naziv, opis, slika FROM proizvodi") or die("Error binding");
+// Check for valid session and obtaiun userid
+$userid = sessionToUID(getUserCookie(), getSessionCookie());
+
+if ($userid === (-1)){
+    //  If invalid user session return here
+    return;
+}
+
+
+// Get product information from database for products owned by this user
+$stmt = $conHandle->prepare("SELECT id, naziv FROM proizvodi WHERE userid = ?") or die("Error binding");
+$stmt->bind_param("i", $userid);
 $stmt->execute();
 
-$stmt->bind_result($id, $nazivP, $opisP, $slikaP);
+$stmt->bind_result($id, $nazivP);
 while($stmt->fetch())
 {
     echo '
-    <div class="subcont_proizvodi" onclick="fetchPdata('.$id.','."'".$nazivP."'".','."'".$opisP."'".','."'".$slikaP."'".')">
+    <div class="subcont_proizvodi" onclick="fetchPdata('."'".$id."'".')">
         '.$nazivP.'
     </div>
 ';

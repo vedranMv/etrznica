@@ -1,7 +1,7 @@
 <?php 
 //  Print a result page for a selected product
-    include "connFile.php";
-    include "zupLookup.php";
+require_once "connFile.php";
+require_once "zupLookup.php";
     
     $pid = 0;
     $uid = 0;

@@ -40,7 +40,7 @@ function updateContent(arg, act)
 
 
 
-function submitForm(form)
+function submitForm(form, id=0)
 {
 	var emailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
@@ -49,8 +49,11 @@ function submitForm(form)
 	var statusBar = form.id+"_status";
 	var formData = new FormData(form);
 	var valid = true;
-	
+	alert("Yo "+statusBar);
 	setTimeout('document.getElementById("'+statusBar+'").innerHTML="";',5000);
+	
+	if (id != 0)
+		formData.append("id", id);
 	
 	//	Validate all required fields
 	for(var i=0;i<form.length;i++)
@@ -97,33 +100,26 @@ function submitForm(form)
 	
 };
 
-function fetchPdata(id, naziv, opis, slika)
+function fetchPdata(id)
 {
-	document.getElementById('subcont_prodinfo').innerHTML = ' \
-		<form id="form_editproduct"  method="post" action="php/updateProd.php" >\
-	<input type="number" name="id" contenteditable="false" hidden="true" value="'+id+'" />\
-	    <table>\
-	        <tr>\
-	            <td>Naziv proizvoda*</td>\
-	            <td><input required="required" type="text" value="'+naziv+'" name="nazivP" placeholder="Naziv"/></td>\
-	        </tr>\
-	        <tr>\
-	            <td>Opis proizvoda*</td>\
-	            <td><textarea required="required" name="opisP" rows="6" cols="50" placeholder="Opis proizvoda...">'+opis+'</textarea><br/></td>\
-	      </tr>\
-	        <tr>\
-	            <td>Slika \
-	            <img width="150px" alt="" src="'+slika+'"/> </td>\
-	            <td><input type="file" name="slikaP" placeholder="Lokacija slike" size="1024" /></td>\
-	        </tr>\
-	    </table> \
-		<br/>\
-		<br/>\
-		<input type="button" onclick="submitForm(this.form)" name="spremi" value="Spremi"  />\
-		<br/>\
-	    	<div id="form_editproduct_status">\
-	    	</div>\
-	</form>';
+	var request;
+	var header = "id="+id;
+	
+	//document.getElementById("subcont_prodinfo").innerHTML = "";
+
+	if (window.XMLHttpRequest) request=new XMLHttpRequest();
+	else request=new ActiveXObject("Microsoft.XMLHTTP");
+	
+	request.onreadystatechange=function()
+	{
+		if (request.readyState==4 && request.status==200)
+		{
+			document.getElementById("subcont_prodinfo").innerHTML = request.responseText;
+		}
+	}
+	request.open("POST","php/adminForm.php",true);
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	request.send(header);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
