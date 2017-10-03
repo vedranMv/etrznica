@@ -2,25 +2,33 @@
 <html>
 <head>
 <?php
+//  Include basic files for connecting to DB and managing user's session
 require_once "php/connFile.php";
 require_once "php/sessionManager.php";
     $page = "";
     
-    //  Get page arguments (page name, filter data...)
+    //  Read query string to get page arguments (page name, filter data...)
     if(isset($_SERVER["QUERY_STRING"]) && !(empty($_SERVER["QUERY_STRING"])) )
     {
+        //  Break query string into form ['key1=value1', 'key1=value2',...]
         $qstr = $_SERVER["QUERY_STRING"];
         $qstr = @explode("&", $qstr);
-        
+        //  Expect first key-value pair to denote page
         $page = @explode("=", $qstr[0]);
-        $page = $page[1];
+        if ($page[0] === "page"){
+            //Loop through page name and remove all non-alpha characters to
+            //  prevent user from tampering with the URL
+            if (ctype_alpha($page[1])) {
+                $page = $page[1];
+            } else {
+                $page = "";
+            }
+        } 
     }
     
     //  Chekc if user is logged in and has an opened session
-    
     $user = getUserCookie();
-    $session = getSessionCookie();
-        
+    $session = getSessionCookie(); 
  ?>
  
 <meta charset="UTF-8">
@@ -31,6 +39,8 @@ require_once "php/sessionManager.php";
 <body>
 
     <?php 
+
+    echo $ret;
         //  Switch between login menu and user-menu
         if ($session == "")
         {
@@ -46,7 +56,7 @@ require_once "php/sessionManager.php";
         else
         {
             //  One every page refresh, extend user's session
-            setcookie($sessionCookie, $session, (time()+60*60),'/');
+            //setcookie($sessionCookie, $session, (time()+60*60), '/');
             echo '
             <div id="cont_user" onmouseenter="extend()" onmouseleave="contract()" style="text-align: right;" >
             	<a class="link_menu" href="?page=dodajP"> Dodaj proizvod </a>
@@ -99,12 +109,16 @@ require_once "php/sessionManager.php";
 	   <!-- Rezultati -->
 	    <div id="cont_pregled">
 		<?php 
-		  //  Load the page 
-		  if (($page != "") && ($page != "connFile") && ($page != "ponuda") &&
-		      file_exists($page.'.php')) {
+		  //  Loading of the main page within this div container
+		  if (($page != "") && 
+		      ($page != "connFile") && 
+		      ($page != "ponuda") &&
+		      file_exists($page.'.php')) 
+		  {
 		      include ($page.'.php');
 		  }
-		  else if ($page != "ponuda") {
+		  else if ($page != "ponuda") 
+		  {
 		      include ('home.php');
 		  }
 		?>

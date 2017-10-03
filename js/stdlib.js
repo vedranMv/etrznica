@@ -42,6 +42,7 @@ function updateContent(arg, act)
 
 function submitForm(form, id=0)
 {
+	//	Regular expression for validating format of e-mail
 	var emailFormat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     
 	var request;
@@ -49,7 +50,8 @@ function submitForm(form, id=0)
 	var statusBar = form.id+"_status";
 	var formData = new FormData(form);
 	var valid = true;
-	alert("Yo "+statusBar);
+
+	document.getElementById(statusBar).innerHTML="Obrada u tijeku, molimo pričekajte";
 	setTimeout('document.getElementById("'+statusBar+'").innerHTML="";',5000);
 	
 	if (id != 0)
@@ -60,6 +62,7 @@ function submitForm(form, id=0)
 	{
 		if (form[i].type!="button")
 		{
+			//	Email field requires special way of validation via regex 
 			if (form[i].name == "email")
 			{
 				if (!emailFormat.test(form[i].value))
@@ -85,13 +88,13 @@ function submitForm(form, id=0)
 	{
 		if (request.readyState==4 && request.status==200)
 		{
-			document.getElementById(statusBar).innerHTML += request.responseText;
+			document.getElementById(statusBar).innerHTML = request.responseText;
 			if ((request.responseText[0] == 'U') || //Uspiješno
 				(request.responseText[0] == 'V'))	//Vaš proiz...
 				form.reset();
 			
-			if (form.id == "form_login")
-				setTimeout('window.location.href = "?page=home";',1500);
+			if ((form.id == "form_login") && (request.responseText[0] == 'P'))
+				setTimeout('window.location.href = "?page=home";',1000);
 		}
 	}
 	request.open("POST",form.action,true);
@@ -100,12 +103,18 @@ function submitForm(form, id=0)
 	
 };
 
-function fetchPdata(id)
+var oldElementId = "";
+function fetchPdata(id, el)
 {
 	var request;
 	var header = "id="+id;
 	
-	//document.getElementById("subcont_prodinfo").innerHTML = "";
+	document.getElementById(el.id).style.backgroundImage = 'url("../imgs/black30.png")';
+	
+	if (oldElementId != "")
+		document.getElementById(oldElementId).style.backgroundImage = '';
+	oldElementId = el.id;
+	
 
 	if (window.XMLHttpRequest) request=new XMLHttpRequest();
 	else request=new ActiveXObject("Microsoft.XMLHTTP");
@@ -120,6 +129,14 @@ function fetchPdata(id)
 	request.open("POST","php/adminForm.php",true);
 	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	request.send(header);
+}
+
+function submitByEnter(e, form)
+{
+	var keyCode = (e.keyCode ? e.keyCode : e.which);
+	
+	if (keyCode == 13)
+		submitForm(form);
 }
 
 ////////////////////////////////////////////////////////////////////////////////

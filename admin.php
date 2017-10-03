@@ -27,7 +27,7 @@ $stmt->bind_result($id, $nazivP);
 while($stmt->fetch())
 {
     echo '
-    <div class="subcont_proizvodi" onclick="fetchPdata('."'".$id."'".')">
+    <div id="subcont_p'.$id.'" class="subcont_proizvodi" onclick="fetchPdata('."'".$id."'".',this)">
         '.$nazivP.'
     </div>
 ';

@@ -1,13 +1,16 @@
+<?php
+global $usernameCookie;
+?>
 <h2>Unesite svoje podatke za prijavu</h2>
 <form id="form_login"  method="post" action="php/loginScript.php" >
     <table>
     <tr>
         <td>Email za prijavu</td>
-        <td><input required="required" type="email" name="email" value="<?php if (isset($_COOKIE['mojDucan_username'])) echo $_COOKIE['mojDucan_username']; ?>" placeholder="Vaša e-mail adressa"/></td>
+        <td><input required="required" onKeyPress="submitByEnter(event, this.form)" type="email" name="email" value="<?php if (isset($_COOKIE[$usernameCookie])) echo getUserDeHashCookie(); ?>" placeholder="Vaša e-mail adressa"/></td>
     </tr>
     <tr>
         <td>Lozinka za prijavu</td>
-        <td><input required="required" type="password" name="passwd" placeholder="Lozinka" /></td>
+        <td><input required="required" onKeyPress="submitByEnter(event, this.form)" type="password" name="passwd" placeholder="Lozinka" /></td>
     </tr>
 </table> 
 

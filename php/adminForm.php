@@ -42,9 +42,11 @@ echo '
       </tr>
         <tr>
             <td>Slika
-            <img class="img_small" alt="" src="'.$slikaP.'"/>
             </td>
-            <td><input type="file" name="slikaP" placeholder="Lokacija slike" size="1024" /></td>
+            <td>
+                <img class="img_small" alt="" src="'.$slikaP.'"/>
+                <input type="file" name="slikaP" placeholder="Lokacija slike" size="1024" />
+            </td>
         </tr>
     </table> 
 

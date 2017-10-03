@@ -1,102 +1,94 @@
 <?php 
-
-    //  Registration of new users to the system
-    include "connFile.php";
-    include "zupLookup.php";
+/**
+ *  Registration of new users to the system
+ *  This script receives parameters about new user to put in the DB through POST
+ *  request from HTML. Verification of parameters is assumed to be done on the
+ *  front-end, here we only check for empty username and password. When saving to
+ *  database, both username is encrypted using AES(declared in connFile.php) and
+ *  password is hashed with password_hash() function
+ */
+    require_once "connFile.php";
+    require_once "zupLookup.php";
    
-
-    //  Fetch all data through POST
-    if (isset($_POST['email']))
+    //  Fetch all data sent through POST
+    $email = "";
+    if (isset($_POST['email'])) {
         $email = $_POST['email'];
-    else
-        $email = "";
-            
-    if (isset($_POST['passwd']))
+    }
+        
+    $passwd = "";        
+    if (isset($_POST['passwd'])) {
         $passwd = $_POST['passwd'];
-    else
-        $passwd = "";
-            
+    }
+    
     if (isset($_POST['naziv']))
         $naziv= $_POST['naziv'];
     
     if (isset($_POST['kontakt']))
         $kontakt = $_POST['kontakt'];
-        
-    if (isset($_POST['zupanija']))
+    $zup = 22;    
+    if (isset($_POST['zupanija'])) {
         $zup = $_POST['zupanija'];
-    else
-        $zup = 22;
-            
-    if (isset($_POST['mjesto']))
+    }
+        
+    $mjesto = " ";        
+    if (isset($_POST['mjesto'])) {
         $mjesto = $_POST['mjesto'];
-    else
-        $mjesto = " ";
+    }
+        
 
-    //  If no arguments skip writing to DB
+    //  If username/email and password were somehow managed to be passed without 
+    //  any content, skip registration
     if (($email !== "") && ($passwd !== ""))
     {
-        //  Check if there's already a user with this email
-        // Get product information from database
-        $stmt = $conHandle->prepare("SELECT emailStr,naziv FROM korisnici WHERE emailStr = ?") or die("rror binding");
+        //  From this point on email is handled exclusively in encrypted form
+        $email = base64_encode($aesEngine->encrypt($email));
+        //  First check if there is a user already in the database with this email
+        $stmt = $conHandle->prepare("SELECT emailStr,naziv FROM korisnici WHERE emailStr = ?");
         $stmt->bind_param("s", $email);
         $stmt->execute();
-        
         $stmt->bind_result($emailK, $nazivK);
-        
-        $exists = false;
-        while($stmt->fetch())
-        {
-            $exists = true;
-            break;
-        }
-        
-        $errorMsg = "Korisnik s navedenom e-mail addresom već postoji, ukoliko ste zaboravili svoju lozinku probajte istu resetirati.";
-        
+        $stmt->store_result();
+
+        //  If non-zero number of rows is returned, user already exists
+        $exists = ($stmt->num_rows() > 0);
+
         $stmt->close();
-        //  Stop here if we already have this email
+        //  Stop here if we already have user with this email
         if ($exists) 
         {   
+            $errorMsg = "Korisnik s navedenom e-mail addresom već postoji, ukoliko ste zaboravili svoju lozinku probajte istu resetirati.";
             echo $errorMsg;
             return;
         }
         
+        //  Proceed with insertion of user into the database
+        $stmt = $conHandle->prepare("INSERT INTO korisnici(emailStr, passwordStr, saltStr, naziv, kontakt, datumReg, zupanija, mjesto, zupanijaStr) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         
-        /* Prepared statement, stage 1: prepare */
-        if (!($stmt = $conHandle->prepare("INSERT INTO korisnici(emailStr, passwordStr, saltStr, naziv, kontakt, datumReg, zupanija, mjesto, zupanijaStr) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"))) {
-            echo "Prepare failed: (" . $mysqli->errno . ") " . $mysqli->error;
-        }
-        
+        //  Setup options used to encrypt user's password
         $options = [
             'cost' => 11,
             'salt' => mcrypt_create_iv(22, MCRYPT_DEV_URANDOM),
         ];
-        // set parameters and execute
-        $emP    = $email;
+        // Link parameters for parametric expression
         $pwdP   = password_hash($passwd, PASSWORD_BCRYPT, $options);
         $saltP  = $options['salt'];
-        $nazP   = $naziv;
-        $koP    = $kontakt;
         $datP   = date("d-m-Y");
-        $zupP   = $zup;
-        $mjeP   = $mjesto;
-        $ppdi   = -1;
         
-        
-        if (!$stmt->bind_param("ssssssiss", $emP, $pwdP, $saltP, $nazP, $koP, $datP, $zupP, $mjeP, $zupanije[$zupP] )) {
-            echo "Binding parameters failed: (" . $stmt->errno . ") " . $stmt->error;
-        }
+        //  Bind parameters for prepared statement
+        $stmt->bind_param("ssssssiss", $email, $pwdP, $saltP, $naziv, $kontakt, $datP, $zup, $mjesto, $zupanije[$zup] );
         $ret = $stmt->execute();
         
         if ($ret === TRUE)
-        {
+        {   //  Successful execution of INSERT query
             //  Save username in cookies, cookie expires after 1 day
-            setcookie("mojDucan_username",$email,(time()+24*60*60));
+            setcookie($usernameCookie,$email,(time()+24*60*60), '/');
             $errorMsg = "Uspješno ste se registrirali. Sada se možete prijaviti u sustav";
         }
         else
-        {
+        {   //  Execution of INSERT query failed
             $errorMsg = "Dogodila se greška kod registracije";
-            echo "Exec failed: (" . $stmt->errno . ") " . $stmt->error;
+            //echo "Exec failed: (" . $stmt->errno . ") " . $stmt->error;
         }
         
         $stmt->close();
