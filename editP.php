@@ -1,6 +1,8 @@
+
 <h2>Upravnjanje vašim postojećim proizvodima</h2>
 <p>Na ovoj stranici možete pregledati svoje postojeće proizvode, obrisati ih ili
 izmjeniti informacije o istima.</p>
+
 
 <h3>Lista proizvoda</h3>
 <div id="subcont_prodlist">
@@ -49,7 +51,7 @@ $stmt->close();
         </tr>
         <tr>
             <td>Opis proizvoda*</td>
-            <td><textarea required="required" name="opisP" rows="6" cols="50" placeholder="Opis proizvoda..."></textarea><br/></td>
+            <td><textarea required="required" name="opisP" rows="6" cols="50" placeholder="Opis proizvoda, dostupna količina, cijena..."></textarea><br/></td>
       </tr>
         <tr>
             <td>Slika</td>

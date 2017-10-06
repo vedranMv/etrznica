@@ -1,5 +1,7 @@
 <h2>Dodavanje novih proizvoda u sustav</h2>
-<p>Popunite navedene informacije o proizvodu kojeg nudite i pritisnite tipku "Dodaj" pri dnu stranice</p>
+<p>Popunite navedene informacije o proizvodu kojeg nudite i pritisnite tipku "Dodaj" pri dnu stranice.
+Vaše kontakt informacija koje ste unjeli tijekom registracije će automatski
+biti dodane kod prikazivanja proizvoda.</p>
 
 <form id="form_addproduct"  method="post" action="php/addProd.php" >
     <table>
@@ -9,7 +11,7 @@
         </tr>
         <tr>
             <td>Opis proizvoda*</td>
-            <td><textarea required="required" name="opisP" rows="6" cols="100" placeholder="Opis proizvoda..."></textarea><br/></td>
+            <td><textarea required="required" name="opisP" rows="6" cols="100" placeholder="Opis proizvoda, dostupna količina, cijena..."></textarea><br/></td>
       </tr>
         <tr>
             <td>Slika</td>

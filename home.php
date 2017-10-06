@@ -1,5 +1,5 @@
 <div style="padding: 50px;margin:auto;line-height: 30px;">
-Dobrodošli na stranicu MojDućan. Ovo je besplatna stranice na kojoj možete predstaviti svoje
+Dobrodošli na stranicu e-Tržnica. Ovo je besplatna stranice na kojoj možete predstaviti svoje
 domaće proizvode ostalim ljudima ukoliko se bavite proizvodnjom, ili potražiti
 namirnice domaće proizvodnje kao alternativu proizvodima iz velikih trgovačkih
 lanaca. Stranica je trenutno neprofitna te služi iskuljučivo kao platforma za 

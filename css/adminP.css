@@ -3,6 +3,7 @@
 	float: left;
 	margin-left:20px;
 	overflow-y: scroll;
+	width: 200px;
 }
 
 #subcont_prodinfo
@@ -15,13 +16,16 @@
 
 .subcont_proizvodi
 {
-	display:        block;
-    cursor:         default;
-    padding:        5px;
+	display:       block;
+    cursor:        default;
+    padding:       5px;
 	border-bottom: 1px solid #454545;
-	max-width:200px;
-	overflow: hidden;
-	cursor: pointer;
+	max-width:     200px;
+	overflow:      hidden;
+	cursor:        pointer;
+	text-align:    left;
+	text-indent:   -5px;
+	margin-left:   5px;
 }
 
 .img_small

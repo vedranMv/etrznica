@@ -43,7 +43,7 @@ require_once "zupLookup.php";
     <h2>  <?php echo $nazivP; ?> </h2>
     
     <h3> Prodavač: <?php echo '<a href="?page=ponuda&filter=osoba&query='.$nazivK.'" >'.$nazivK.'</a>'; ?> </h3>
-    <p> Prodavač se nalazi u okolica mjesta <?php echo $mjestoK; ?> , županija <?php echo '<a href="?page=ponuda&filter=zupanija&query='.$zupanijaK.'">'.$zupanije[$zupanijaK].'</a>'; ?> </p>
+    <p> Prodavač se nalazi u okolica mjesta <?php echo ($mjestoK === "")?("Nije dostupno"):$mjestoK; ?> , županija <?php echo '<a href="?page=ponuda&filter=zupanija&query='.$zupanijaK.'">'.$zupanije[$zupanijaK].'</a>'; ?> </p>
     <img class="proizvod_slika" src="<?php echo $slikaK; ?>">
 	<div class="proizvod_opis">
 		<?php echo $opisP; ?>

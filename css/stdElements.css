@@ -1,0 +1,38 @@
+@charset "UTF-8";
+
+a
+{
+    font-family: fantasy;
+     color: #BBB;
+}
+a:visited
+{
+     color: #BBB;
+}
+a:hover
+{
+     color: #FFF;
+     
+}
+
+form
+{
+    margin-top: 30px;
+}
+
+input[type=email], input[type=password], input[type=text]
+{
+    background-color: #404552;
+    color: #8e949f;
+    border: 1px solid #2b2e39;
+    padding: 5px;
+    border-radius: 5px;
+    color: #DDD;
+}
+
+.button_important
+{
+	border: 1px dashed #FF0000;
+	padding: 5px;
+    border-radius: 5px;
+}

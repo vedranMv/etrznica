@@ -32,7 +32,7 @@ require_once "php/sessionManager.php";
  ?>
  
 <meta charset="UTF-8">
-<title>Dobrodošli u Vaš on-line dućan</title>
+<title>Dobrodošli u on-line tržnicu, e-Tržnica</title>
 <link href="css/style.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="js/stdlib.js" ></script>
 </head>
@@ -45,11 +45,8 @@ require_once "php/sessionManager.php";
         if ($session == "")
         {
             echo '
-            <div id="cont_user" onmouseenter="extend()" onmouseleave="contract()" style="width:150px;" >
-            	<a href="?page=register"> Ponudi svoje proizvode </a>
-            	<br/>
-            	<br/>
-            	<a href="?page=login" style="margin-top: 30px;"> Prijavi se </a>
+            <div id="cont_user" onmouseenter="alterContent(true);" onmouseleave="alterContent(false);" style="width:150px;" >
+            	<a class="link_menu2" href="?page=register"> Ponudi svoje proizvode </a>
             </div>
             ';
         }
@@ -58,10 +55,10 @@ require_once "php/sessionManager.php";
             //  One every page refresh, extend user's session
             //setcookie($sessionCookie, $session, (time()+60*60), '/');
             echo '
-            <div id="cont_user" onmouseenter="extend()" onmouseleave="contract()" style="text-align: right;" >
-            	<a class="link_menu" href="?page=dodajP"> Dodaj proizvod </a>
-            	<a class="link_menu" href="?page=admin" > Upravljaj proizvodima </a>
-            	<a class="link_menu" href="?page=settings" > Potavke računa </a>
+            <div id="cont_user" style="text-align: right;" >
+            	<a class="link_menu" href="?page=addP"> Dodaj proizvod </a>
+            	<a class="link_menu" href="?page=editP" > Upravljaj proizvodima </a>
+            	<a class="link_menu" href="?page=editU" > Potavke računa </a>
             	<a class="link_menu" href="?page=logout"> Odjavi se </a>
 
             </div>
@@ -96,7 +93,7 @@ require_once "php/sessionManager.php";
 	        	      $filt = @explode("=", $qstr[1]);
 	        	      $GLOBALS["overrideFilter"] = $filt[1];
 	        	      
-	        	      $quer = explode("=", $qstr[2]);
+	        	      $quer = @explode("=", $qstr[2]);
 	        	      $GLOBALS["overrideQuery"] = $quer[1];
 	        	      
 	        	      

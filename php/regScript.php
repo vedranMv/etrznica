@@ -21,6 +21,12 @@
         $passwd = $_POST['passwd'];
     }
     
+    $passwd2 = "";
+    if (isset($_POST['passwd2'])) {
+        $passwd2 = $_POST['passwd2'];
+    }
+    
+    
     if (isset($_POST['naziv']))
         $naziv= $_POST['naziv'];
     
@@ -31,7 +37,7 @@
         $zup = $_POST['zupanija'];
     }
         
-    $mjesto = " ";        
+    $mjesto = "";        
     if (isset($_POST['mjesto'])) {
         $mjesto = $_POST['mjesto'];
     }
@@ -39,7 +45,7 @@
 
     //  If username/email and password were somehow managed to be passed without 
     //  any content, skip registration
-    if (($email !== "") && ($passwd !== ""))
+    if (($email !== "") && ($passwd !== "") && ($passwd2 !== "") )
     {
         //  From this point on email is handled exclusively in encrypted form
         $email = base64_encode($aesEngine->encrypt($email));
@@ -72,8 +78,17 @@
         ];
         // Link parameters for parametric expression
         $pwdP   = password_hash($passwd, PASSWORD_BCRYPT, $options);
+        $pwd2P  = password_hash($passwd2, PASSWORD_BCRYPT, $options);
         $saltP  = $options['salt'];
         $datP   = date("d-m-Y");
+        
+        //  Check if first and repeated passwords match
+        if ($pwdP !== $pwd2P)
+        {
+            $errorMsg = "Unešena i ponovljena lozinka se ne podudaraju.";
+            echo $errorMsg;
+            return;
+        }
         
         //  Bind parameters for prepared statement
         $stmt->bind_param("ssssssiss", $email, $pwdP, $saltP, $naziv, $kontakt, $datP, $zup, $mjesto, $zupanije[$zup] );

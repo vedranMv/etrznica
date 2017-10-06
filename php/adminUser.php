@@ -1,14 +1,34 @@
+<?php
+require_once "php/connFile.php";
+require_once "php/sessionManager.php";
 
-Za postavljanje vlastitih proizvoda na stranicu potrebno je registrirati se
-kako biste kasnije proizvode mogli ukloniti ili izmjeniti. Naziv koji upišete 
-biti će prikazan kao naziv prodavatelja uz svaki vaš proizvod kao i kontakt.
-Kontakt informacije možete ostavti po želji, facebook ime, broj telefona, 
-goluba pismonoše... Mjesto i županija nisu obavezni podaci ali će vam pomoći
-stupiti u kontakt s ljudima u vašoj blizini i time olakšati dostavu stoga je
-poželjno unesti te podatke. Email-adresa so koristi isključivo za prijavu na
-stranicu i nije javno dostupna
-<br\>
-Za registraciju popunite podatke ispod
+// Check for valid session and obtaiun userid
+$userid = sessionToUID(getUserCookie(), getSessionCookie());
+
+if ($userid === (-1)){
+    //  If invalid user session return here
+    return;
+}
+
+// Get user information from database that user can change
+$stmt = $conHandle->prepare("SELECT emailStr, naziv FROM korisniti WHERE id = ?");
+$stmt->bind_param("i", $userid);
+$stmt->execute();
+
+$stmt->bind_result($id, $nazivP);
+while($stmt->fetch())
+{
+    echo '
+    <div id="subcont_p'.$id.'" class="subcont_proizvodi" onclick="fetchPdata('."'".$id."'".',this)">
+        '.$nazivP.'
+    </div>
+';
+}
+
+$stmt->close();
+
+?>
+<h2>Promjena osobnih podataka</h2>
 <form id="form_register"  method="post" action="php/regScript.php" >
 
 <p>Email i lozinka za prijavu na stranicu, zbog vaše sigurnosti
@@ -18,13 +38,9 @@ preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><b
     <td>Email za prijavu*</td>
     <td><input required="required" type="email" name="email" placeholder="Vaša e-mail adressa"/></td>
   </tr>
-  <tr>
+    <tr>
     <td>Lozinka za prijavu*</td>
     <td><input required="required" type="password" name="passwd" placeholder="Lozinka" /></td>
-  </tr>
-  <tr>
-    <td>Ponovite lozinku*</td>
-    <td><input required="required" type="password" name="passwd2" placeholder="Lozinka" /></td>
   </tr>
 </table> 
 	 

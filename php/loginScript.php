@@ -30,6 +30,8 @@
         $stmt->bind_result($passK);
         $stmt->store_result();
         
+        //  Save username in cookies, cookie expires after 1 day
+        setcookie($usernameCookie,$email,(time()+24*60*60), '/');
         $exists = ($stmt->num_rows() > 0);
         
         $stmt->fetch();
@@ -47,7 +49,7 @@
             createNewSessionFor($email);
 
         } else {
-            $errorMsg = '1Neispravna kombinacija korisničkog imena i lozinke, pokušajte ponovo.';
+            $errorMsg = 'Neispravna kombinacija korisničkog imena i lozinke, pokušajte ponovo.';
         }
         
     }

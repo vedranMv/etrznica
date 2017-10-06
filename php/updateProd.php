@@ -85,6 +85,7 @@ if (($nazivP !== "") && ($opisP !== ""))
         // Update product info in database
         $stmt->execute();
         echo "Promjene spremljene";
+        $stmt->close();
     }
 }
 

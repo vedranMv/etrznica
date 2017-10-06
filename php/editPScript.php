@@ -56,7 +56,12 @@ echo '
 	<br/>
     	<div id="form_editp_status">
     	</div>
-</form>';
+</form>
+<form style="float:right;margin-top:-25px;">
+    <input type="button" class="button_important" onclick="deleteSw('."'product'".', '.$id.')" name="delete" value="Ukloni proizvod"  />
+</form>
+
+<div style="clear:both;"></div>';
 
 
 $stmt->close();

@@ -9,7 +9,7 @@ function filterByNaziv($query)
     global $conHandle, $zupanije;
     
     // Get product information from database
-    $stmt = $conHandle->prepare("SELECT id, userid, naziv FROM proizvodi WHERE naziv LIKE CONCAT('%',?,'%')") or die("1Error binding");
+    $stmt = $conHandle->prepare("SELECT id, userid, naziv FROM proizvodi WHERE naziv LIKE CONCAT('%',?,'%') ORDER BY naziv DESC") or die("1Error binding");
     $stmt->bind_param("s", $query);
     $stmt->execute();
     

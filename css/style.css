@@ -2,6 +2,7 @@
 
 @import url("searchResults.css");
 @import url("adminP.css");
+@import url("stdElements.css");
 
 body
 {
@@ -11,26 +12,6 @@ body
     color:              #DDD;
     font-family: fantasy;
     line-height: 20px;
-}
-
-a
-{
-	font-family: fantasy;
-     color: #BBB;
-}
-a:visited
-{
-     color: #BBB;
-}
-a:hover
-{
-     color: #FFF;
-     
-}
-
-form
-{
-	margin-top: 30px;
 }
 
 #cont_header
@@ -51,7 +32,7 @@ form
 	background-repeat: repeat;
 	margin-top:        -15px;
 	border-radius:     5px;
-	border: 1px dashed #454545;
+	border:            1px dashed #454545;
 	color:             #FFF;
 	padding:           5px;
 	padding-top:       15px;
@@ -60,37 +41,47 @@ form
 }
 #cont_user:hover
 {
-	background-image: url("../imgs/black30.png");
-	color:     #FFF;
+	height:auto;
 }
 #cont_user > a
 {
-	color:#454545;
-	text-decoration: none;
+	color:             #454545;
+	text-decoration:   none;
+    display:           block;
+    border-top:        1px dashed #454545;
 }
 
 #cont_user:hover > a
 {
-    color: #FFF;
+    width: auto;
+
 }
 #cont_user:hover > a:hover
 {
-    color: #EFEFEF;
+    color:              #121212;
+    background-image:   url("../imgs/hover.png");
+    background-repeat:  no-repeat;
+    background-position:center center;
 }
 
 .link_menu
 {
-	border-bottom: 1px solid #454545;
-	display: block;
-	margin-bottom: 5px ;
+	padding:   5px;
+	margin:    0px;
+}
+
+.link_menu2
+{
+	padding-top:   10px;
+    padding-bottom: 10px;
 }
 
 #cont_wrapper
 {
 	margins:   auto;
 	width:     auto;
-	height:    auto:
-	border:         1px solid #454545;
+	height:    auto;
+	/*border:         1px solid #454545;*/
     border-radius:  10px;
 }
 
@@ -172,13 +163,13 @@ form
         margin-left: 20px;
         padding: 5px;
     }
-
+    
     
 #cont_footer
 {
     border:         1px solid #454545;
     border-radius:  10px;
-    height:         70px;
+    height:         40px;
     width:          100%;
     margin-top:     50px;
     margin-bottom:  -40px;
