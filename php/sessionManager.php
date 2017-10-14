@@ -1,5 +1,10 @@
 <?php 
 
+/**
+ * Return AES-encrypted email address of a user as stored in a cookie
+ * @return AES-encrypted email address from cookies if it exists, empty string
+ * otherwise
+ */
 function getUserCookie()
 {
     global $usernameCookie;
@@ -12,6 +17,11 @@ function getUserCookie()
     }
 }
 
+/**
+ * Return decrypted email from encrypted value stored in cookies
+ * @return Plain-text email of a user as stored in cookies if it exists, empty
+ * string otherwise
+ */
 function getUserDeHashCookie()
 {
     global $usernameCookie, $aesEngine;
@@ -24,6 +34,10 @@ function getUserDeHashCookie()
     }
 }
 
+/**
+ * Return session hash stored in a user's cookie
+ * @return Session hash if cookie exists, empty string otherwise
+ */
 function getSessionCookie()
 {
     global $sessionCookie;
@@ -36,6 +50,35 @@ function getSessionCookie()
 }
 
 /**
+ * Query the database for a provided unencrypted email addres and return 
+ * userid if it exists. If it doesn't exist -1 is returned
+ * @param Unencrypted email string
+ * @return userid matching provided email, (-1) if there's no match
+ */
+function emailDBToUID($emailString)
+{
+    global $conHandle, $aesEngine;
+    
+    $emailB64hash = base64_encode($aesEngine->encrypt($emailString));
+    
+    $stmt = $conHandle->prepare("SELECT id FROM korisnici WHERE (emailStr = ?)");
+    $stmt->bind_param("s", $emailB64hash);
+    $stmt->execute();
+    
+    $stmt->bind_result($userid);
+    $stmt->store_result();
+    
+    $exists = ($stmt->num_rows() > 0);
+    
+    if ($exists === TRUE) {
+        $stmt->fetch();
+        return $userid;
+    } else {
+        return (-1);
+    }
+}
+
+/**
  * Check whether the arguments match a valid user session from DB
  * @param $cookiemail is email of a user, as stored in cookies
  * @param $cookieSes is session of a user, as stored in cookies
@@ -43,11 +86,20 @@ function getSessionCookie()
  */
 function sessionToUID($cookiemail, $cookieSes)
 {
-    global $conHandle, $sessionCookie, $usernameCookie;
+    global $conHandle;
+    
+    //  By default, when user logs out his session is set to an empty string,
+    //  this would technically allow anyone to hijack a session of a logged-out
+    //  user by setting sessionCookie to "" and emailCookie to someone elses
+    //  email. This check automatically claims all empty-string session invalid.
+    if (isEmptyStr(getSessionCookie())) {
+        return FALSE;
+    }
+    
     //  Get user ID based on current session (retreived from cookie)
     $stmt = $conHandle->prepare("SELECT id FROM korisnici WHERE (emailStr = ?) AND (session = ?)") or die("Error binding");
     //$stmt->bind_param("ss", $cookiemail, $cookieSes);
-    $stmt->bind_param("ss", getUserCookie(), getSessionCookie());
+    $stmt->bind_param("ss", $cookiemail, $cookieSes);
     $stmt->execute();
     
     $stmt->bind_result($userid);
@@ -68,7 +120,31 @@ function sessionToUID($cookiemail, $cookieSes)
 }
 
 /**
+ * Check whether existing cookie data makes up a valid session
+ * @return TRUE if session is valid, FALSE if it isn't
+ */
+function hasValidSession()
+{
+    //  By default, when user logs out his session is set to an empty string, 
+    //  this would technically allow anyone to hijack a session of a logged-out
+    //  user by setting sessionCookie to "" and emailCookie to someone elses 
+    //  email. This check automatically claims all empty-string session invalid.
+    if (isEmptyStr(getSessionCookie())) {
+        return FALSE;
+    }
+    $sessionUID = sessionToUID(getUserCookie(), getSessionCookie());
+    
+    if ($sessionUID === (-1)) {
+        return FALSE;
+    } else {
+        return TRUE;
+    }
+}
+
+/**
+ * Create new session for a user with provided AES-encrypted e-mail
  * @param $email AES-encripted $email uncoded using base64_encode
+ * @return none
  */
 function createNewSessionFor($email)
 {
@@ -90,6 +166,10 @@ function createNewSessionFor($email)
     $stmt->close();
 }
 
+/**
+ * Destroy session stored in user's cookies and DB
+ * @return none
+ */
 function destroyCurrentSession()
 {
     global $conHandle, $sessionCookie;

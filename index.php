@@ -23,48 +23,55 @@ require_once "php/sessionManager.php";
             } else {
                 $page = "";
             }
-        } 
+        }
+        $cnt = 0;
+        $token = "";
+        while (isset($qstr[$cnt])) {
+            if (strstr($qstr[$cnt], 'token=') !== FALSE) {
+                //  Split token=***** and save value after = sign
+                $token = @explode("=", $qstr[$cnt]);
+                $token = $token[1];
+               
+            }
+            $cnt++;
+        }
     }
     
     //  Chekc if user is logged in and has an opened session
     $user = getUserCookie();
-    $session = getSessionCookie(); 
+    $session = getSessionCookie();
+    $validSes = hasValidSession();
+    //echo "User: ".$user."<br/>Sesion:".$session."<br/>Valid:".$validSes;
  ?>
  
-<meta charset="UTF-8">
-<title>Dobrodošli u on-line tržnicu, e-Tržnica</title>
-<link href="css/style.css" rel="stylesheet" type="text/css" />
-<script type="text/javascript" src="js/stdlib.js" ></script>
+    <meta charset="UTF-8">
+    <title>Dobrodošli u e-Tržnicu, vašu on-line tržnicu</title>
+    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="js/stdlib.js" ></script>
 </head>
-<body>
 
+<body <?php if (!$validSes) { echo 'onmouseenter="alterContent(false);"'; } ?> >
     <?php 
-
-    echo $ret;
         //  Switch between login menu and user-menu
-        if ($session == "")
-        {
+        if (!$validSes) {
             echo '
             <div id="cont_user" onmouseenter="alterContent(true);" onmouseleave="alterContent(false);" style="width:150px;" >
             	<a class="link_menu2" href="?page=register"> Ponudi svoje proizvode </a>
             </div>
             ';
         }
-        else
-        {
-            //  One every page refresh, extend user's session
-            //setcookie($sessionCookie, $session, (time()+60*60), '/');
+        else {
+            //  On every page refresh, extend user's session
+            setcookie($sessionCookie, $session, (time()+60*60), '/');
             echo '
             <div id="cont_user" style="text-align: right;" >
             	<a class="link_menu" href="?page=addP"> Dodaj proizvod </a>
             	<a class="link_menu" href="?page=editP" > Upravljaj proizvodima </a>
             	<a class="link_menu" href="?page=editU" > Potavke računa </a>
             	<a class="link_menu" href="?page=logout"> Odjavi se </a>
-
             </div>
             ';
         }
-    
     ?>
     <div id="cont_header">
     	<a href="?page=home"><img alt="" src="imgs/title.png"/></a>
@@ -96,7 +103,6 @@ require_once "php/sessionManager.php";
 	        	      $quer = @explode("=", $qstr[2]);
 	        	      $GLOBALS["overrideQuery"] = $quer[1];
 	        	      
-	        	      
 	        	      include "php/ponuda.php";
 	        	  }
 	        	?>
@@ -110,23 +116,19 @@ require_once "php/sessionManager.php";
 		  if (($page != "") && 
 		      ($page != "connFile") && 
 		      ($page != "ponuda") &&
-		      file_exists($page.'.php')) 
-		  {
+		      file_exists($page.'.php')) {
 		      include ($page.'.php');
 		  }
-		  else if ($page != "ponuda") 
-		  {
+		  else if ($page != "ponuda") {
 		      include ('home.php');
 		  }
 		?>
 	    </div>
-	    
 	    <div style="clear:both;"></div>
     </div>
     
-    
     <div id="cont_footer">
-    </div>
+    	| <a href="?page=info">Informacije</a> | 2017 |
     
 </body>
 </html>

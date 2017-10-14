@@ -4,14 +4,18 @@
 	margin-left:20px;
 	overflow-y: scroll;
 	width: 200px;
+	height: 300px;
+	background-image:  url("../imgs/black30.png");
+	border-radius: 5px;
 }
 
 #subcont_prodinfo
 {
-	float:         left;
-    padding-left:    20px;
+	float:          left;
+    padding-left:   20px;
     margin-left:    20px;
     border-left:    1px double #454545;
+    overflow:       hidden;
 }
 
 .subcont_proizvodi

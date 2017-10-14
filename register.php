@@ -1,18 +1,14 @@
 
 Za postavljanje vlastitih proizvoda na stranicu potrebno je registrirati se
-kako biste kasnije proizvode mogli ukloniti ili izmjeniti. Naziv koji upišete 
-biti će prikazan kao naziv prodavatelja uz svaki vaš proizvod kao i kontakt.
-Kontakt informacije možete ostavti po želji, facebook ime, broj telefona, 
-goluba pismonoše... Mjesto i županija nisu obavezni podaci ali će vam pomoći
-stupiti u kontakt s ljudima u vašoj blizini i time olakšati dostavu stoga je
-poželjno unesti te podatke. Email-adresa so koristi isključivo za prijavu na
-stranicu i nije javno dostupna
+kako biste kasnije proizvode mogli ukloniti ili izmjeniti. 
 <br\>
-Za registraciju popunite podatke ispod
+Za registraciju je potrebno popuniti podatke ispod:
 <form id="form_register"  method="post" action="php/regScript.php" >
 
-<p>Email i lozinka za prijavu na stranicu, zbog vaše sigurnosti
-preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><br/>
+<p>Email i lozinka za prijavu na stranicu<br/>
+<span style="font-size: 12px;">Email adresa navedena ovdje se koristi isključivo
+kod prijave i nije javno dostupna. Zbog vaše sigurnosti preporuča se upotreba 
+lozinke koju ne koristite na nekoj drugoj stranici.</span></p>
  <table>
   <tr>
     <td>Email za prijavu*</td>
@@ -20,7 +16,10 @@ preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><b
   </tr>
   <tr>
     <td>Lozinka za prijavu*</td>
-    <td><input required="required" type="password" name="passwd" placeholder="Lozinka" /></td>
+    <td>
+    	<input required="required" type="password" name="passwd" placeholder="Lozinka" /> 
+    	(<span style="font-size: 12px;">Lozinka mora biti duža od 6 znakova!</span>)
+    </td>
   </tr>
   <tr>
     <td>Ponovite lozinku*</td>
@@ -29,7 +28,13 @@ preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><b
 </table> 
 	 
 	  <br/>
-	<p>Podaci o vama</p><br/>
+	<p>
+    	Podaci o vama<br/>
+    	<span style="font-size: 12px;">Ovi podaci će biti dostupni uz svaki vaš postavljeni
+    	proizvod kako bi ljudi zainteresirani za proizvod mogli stupiti s vama
+    	u kontatk i vidjeti gdje se nalazite. Kontakt informacije možete ostavti po želji, 
+    	facebook ime, broj telefona, lokaciju goluba pismonoše...</span>
+    </p>
 	 <table>
       <tr>
         <td>Naziv prodavača*</td>
@@ -40,9 +45,9 @@ preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><b
         <td><textarea required="required" name="kontakt" rows="3" cols="60" placeholder="Kontak informacije dostupne pri pregledu vaših proizvoda"></textarea><br/></td>
       </tr>
       <tr>
-        <td>Županija prodaje</td>
+        <td>Županija prodaje*</td>
         <td>
-        	<select name="zupanija">
+        	<select required="required" name="zupanija">
         		<option value="1">Zagrebačka županija</option>
                 <option value="2">Krapinsko-zagorska županija</option>
                 <option value="3">Sisačko-moslavačka županija</option>
@@ -68,14 +73,18 @@ preporuča se upotreba lozinke koju ne koristite na nekoj drugoj stranici.</p><b
 		</td>
       </tr>
       <tr>
-        <td>Mjesto prodaje</td>
-        <td><input type="text" name="mjesto" placeholder="Mjesto"/></td>
+        <td>Mjesto prodaje*</td>
+        <td><input required="required" type="text" name="mjesto" placeholder="Mjesto"/></td>
       </tr>
     </table> 
 
 	<br/>
-	<br/>
-	<input type="button" onclick="submitForm(this.form)" name="register" value="Registracija"  />
+	<p style="font-size: 12px;text-align: left;">Ova stranica koristi "kolačiće"(engl. cookies) 
+	za identifikaciju registriranih	korisnika. Registracijom pristajete na uporabu 
+	kolačića te garantirate da su gore navedeni podaci ispravni. U slučaju 
+	davanja lažnih podataka vaš će račun biti trajno uklonjen.</p>
+	
+	<input type="button" class="button_generic" onclick="submitForm(this.form)" name="register" value="Registracija"  />
 	<br/>
     	<div id="form_register_status">
     

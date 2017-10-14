@@ -16,10 +16,11 @@ global $usernameCookie;
 
 	<br/>
 	<br/>
-	<input type="button" onclick="submitForm(this.form)" name="login" value="Prijava"  />
+	<input type="button" class="button_generic" onclick="submitForm(this.form)" name="login" value="Prijava"  />
 	<br/>
 	<div id="form_login_status">
 	</div>
 	<br/>
+	<a href="?page=resetPwd">Zaboravili ste lozinku?</a>
 
 </form>

@@ -1,6 +1,7 @@
 <?php 
-
-    //  Filter product database by different criteria
+/**
+ * Filter product database by different criteria
+ */
 require_once "connFile.php";
 require_once "zupLookup.php";
 
@@ -41,9 +42,9 @@ function filterByNaziv($query)
         
         echo '
             <div onclick="updateContent('."'".'query='.$param[$count-1]['id'].'&user='.$param[$count-1]['userid']."'".', 1);" class="cont_rezultat_entry">
-            '.$nazivK.'
-            nudi '.$param[$count-1]['nazivP'].'
-            oko '.$zupanije[$zupK].'
+            <u>'.$nazivK.'</u>
+            nudi <b>'.$param[$count-1]['nazivP'].'</b>
+            oko <i>'.$zupanije[$zupK].'</i>
             </div>';
         $count--;
         $stmt->close();
@@ -91,9 +92,9 @@ function filterByZupanija($query)
         {
             echo '
                 <div onclick="updateContent('."'".'query='.$id.'&user='.$param[$count]['userid']."'".', 1);" class="cont_rezultat_entry">
-                '.$param[$count]['naziv'].'
-                 nudi '.$nazivP.'
-                 oko '.$zupanije[ $param[$count]['zup'] ].'
+                <u>'.$param[$count]['naziv'].'</u>
+                 nudi <b>'.$nazivP.'</b>
+                 oko <i>'.$zupanije[ $param[$count]['zup'] ].'</i>
                  </div>';
         }
         $stmt->close();
@@ -101,64 +102,52 @@ function filterByZupanija($query)
     }
 }
     
-    
-    
-    if (isset($_POST['query'])) {
-        $query = $_POST['query'];
-    }
-    else if (isset($GLOBALS["overrideQuery"])) {
-        
-        $query = $GLOBALS["overrideQuery"];
-    }
-    else 
-    {
-        $query = "";
-    }
-    
-    if (isset($_POST['filter']))
-    {
-        $fil = $_POST['filter'];
+//  Fetch data sent through POST
+$query = "";
+if (isset($_POST['query'])) {
+    $query = $_POST['query'];
+} else if (isset($GLOBALS["overrideQuery"])) {
+    $query = $GLOBALS["overrideQuery"];
+}
 
+$fil = "";
+if (isset($_POST['filter'])) {
+    $fil = $_POST['filter'];
+} else if (isset($GLOBALS["overrideFilter"])) {
+    $fil = $GLOBALS["overrideFilter"];
+}
+
+//  Jump to the right filter if one is provided
+if ($fil !== "") {
+    if ($fil === "zupanija") {
+        //  'zupanija' filter supports two types of queries: a) integer query which
+        //  gets translated into entry from $zupanije lookup table; or b) string
+        //  query which gets passed directly to the filter
+        if ($query < 23) {
+            $query = $zupanije[$query];
+        }
+        goto zupanija;
+    } else if ($fil == "osoba") {
+        //  TODO: Implement filtering by user's name (not email but name)
+        goto osoba;
     }
-    else if (isset($GLOBALS["overrideFilter"])) {
-        $fil = $GLOBALS["overrideFilter"];
-        
-    }
-    else
-    {
-        $fil = "";
-    }
-    //  Go to the right filter if one is provided
-    if ($fil !== "")
-    {
-        if ($fil === "zupanija")
-        {
-            if ($query < 23) {
-                $query = $zupanije[$query];
-            }
-            goto zupanija;
-        } /*else if if ($fil == "osoba") {
-        //goto 2;
-        1===1;
-        }*/
-    }
+}
     
-    $param = array();
-    
-    if ($query != "")
+//  If query was provided run it using different filters
+if ($query != "")
+{
+    //  If filterByNaziv returns FALSE it didn't find any entries in database and
+    //  we then activate second filter, filterByZupanija
+    $ret = filterByNaziv($query);
+    //echo $ret;
+    if (!$ret)
     {
-        //  If $zupK is not set means we've skipped the loop above, meaning that
-        //  no products were found with the query string so repeat the search
-        //  by looking through municipalities matching query string
-        $ret = filterByNaziv($query);
-        //echo $ret;
-        if (!$ret)
-        {
 //  Dirty and quick way of jumping to this section using GOTO when we activate
 //  only a 'zupanija' filter
 zupanija:
-            filterByZupanija($query);
+        filterByZupanija($query);
+osoba:
 
-       }
-    }
+   }
+}
 ?>

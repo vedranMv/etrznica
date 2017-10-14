@@ -5,9 +5,15 @@ setTimeout('window.location.href = "?page=home";',1500);
 </script>
 
 <?php 
-    //include "php/sessionManager.php"; -->Inclusion of this is handled by main
-    //  file which includes this file
+/**
+ * Log user out of website
+ * This script performs logout of user by destroying it session.
+ */
+    require_once "php/sessionManager.php";
 
-    //  Call session destructor
-    destroyCurrentSession();
+    //  Ensure that whoever calls this is logged in
+    if (hasValidSession()) {
+        //  Call session destructor
+        destroyCurrentSession();
+    }
 ?>

@@ -1,5 +1,7 @@
 <?php 
-//  Print a result page for a selected product
+/**
+ * Print a result page for a selected product
+ */
 require_once "connFile.php";
 require_once "zupLookup.php";
     
@@ -44,15 +46,23 @@ require_once "zupLookup.php";
     
     <h3> Prodavač: <?php echo '<a href="?page=ponuda&filter=osoba&query='.$nazivK.'" >'.$nazivK.'</a>'; ?> </h3>
     <p> Prodavač se nalazi u okolica mjesta <?php echo ($mjestoK === "")?("Nije dostupno"):$mjestoK; ?> , županija <?php echo '<a href="?page=ponuda&filter=zupanija&query='.$zupanijaK.'">'.$zupanije[$zupanijaK].'</a>'; ?> </p>
+
     <img class="proizvod_slika" src="<?php echo $slikaK; ?>">
 	<div class="proizvod_opis">
 		<?php echo $opisP; ?>
 	</div>
     <div style="clear:both;"></div>
+    
     <div id="subcont_kontakt">
     	<p style="margin-left:0px;">Prodavač je ostavio sljedeće kontakt informacije: </p>
     	<p> <?php echo $kontaktK; ?> </p>
     </div>
+    
+    <form style="float:right;margin-top:5px;">
+    	<input type="button" class="button_generic" onclick="<?php echo "fileReport('proizvod',".$pid.");"; ?>" name="report" value="Prijavi neprikladan sadržaj"  />
+	</form>
+	
+	<div style="clear:both;"></div>
 
 
     

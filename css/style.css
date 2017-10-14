@@ -6,12 +6,12 @@
 
 body
 {
-    /*background-color: #CECECE;*/
     background-image:   url("../imgs/food-sunset-love-field.jpg");
     background-repeat:  no-repeat;
     color:              #DDD;
     font-family: fantasy;
     line-height: 20px;
+    overflow: scroll;
 }
 
 #cont_header
@@ -26,7 +26,7 @@ body
 {
 	float:             right;
 	width:             auto;
-	height:            50px;
+	height:            55px;
 	z-index:           1;
 	background-image:  url("../imgs/black10.png");
 	background-repeat: repeat;
@@ -42,6 +42,7 @@ body
 #cont_user:hover
 {
 	height:auto;
+	padding-bottom:0px
 }
 #cont_user > a
 {
@@ -72,22 +73,22 @@ body
 
 .link_menu2
 {
-	padding-top:   10px;
+	padding-top:    10px;
     padding-bottom: 10px;
 }
 
 #cont_wrapper
 {
-	margins:   auto;
-	width:     auto;
-	height:    auto;
-	/*border:         1px solid #454545;*/
+	margins:       auto;
+	width:         auto;
+	height:        auto;
     border-radius:  10px;
+    min-width: 1200px;
 }
 
 #cont_brzo_trazenje
 {
-    /*border:         1px solid #eeeeec;*/
+    border:         1px dashed #eeeeec;
     border-radius:  10px;
     float:          left;
     min-width:      250px;
@@ -97,18 +98,18 @@ body
 	.search_box
 	{
 	    width:  230px;
-	    margin: 10px;
+	    margin: 20px;
+	    margin-bottom: 5px ;
 	    font-size: 16px;
 	}
 	
 	#cont_rezultati
 	{
-	    /*min-width:     230px;*/
 	    margin:        10px;
 	    min-height:    400px;
 	    overflow-y:    scroll;
 	    border: 1px solid #454545;
-        /*border-radius: 10px;*/
+	    background-image: url("../imgs/black10.png");
 	}
 	
 #cont_pregled
@@ -118,7 +119,7 @@ body
     border-radius:  10px;
     float:          left;
     margin-left:    20px;
-    min-width:      400px;
+    min-width:      800px;
     width:          70%;
     min-height:     400px;
     padding:        15px;
@@ -144,14 +145,19 @@ body
     {
         padding:    50px;
         padding-top: 0px;
+        text-align: center;
     }
     #form_register > p
     {
-        background-image: url("../imgs/black10.png");
+        background-image: url("../imgs/black30.png");
         padding: 5px;
         margin: 5px;
         text-align: center;
         font-size: 17px;
+    }
+    #form_register > table
+    {
+        text-align: left;
     }
     
     #subcont_kontakt
@@ -167,11 +173,17 @@ body
     
 #cont_footer
 {
-    border:         1px solid #454545;
-    border-radius:  10px;
+    border-top:     1px solid #454545;
     height:         40px;
     width:          100%;
     margin-top:     50px;
     margin-bottom:  -40px;
+    text-align:     center;
 }
+
+    #cont_footer > a
+    {
+        display:    inline-block;
+        margin:     auto;
+    }
 

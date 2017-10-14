@@ -39,13 +39,16 @@ $stmt->close();
     <td>Email za prijavu*</td>
     <td><input required="required" type="email" name="email" value="<?php echo $aesEngine->decrypt(base64_decode($emailK)); ?>" placeholder="Vaša e-mail adressa"/></td>
   </tr>
-    <tr>
+  <tr>
     <td>Promjena lozinke*</td>
-    <td><input type="password" name="passwd" placeholder="Lozinka" /></td>
+    <td>
+        <input type="password" name="passwd" placeholder="Lozinka" />
+        (<span style="font-size: 12px;">Lozinka mora biti duža od 6 znakova!</span>)
+    </td>
   </tr>
   <tr>
     <td>Ponovite lozinku*</td>
-    <td><input " type="password" name="passwd2" placeholder="Lozinka" /></td>
+    <td><input type="password" name="passwd2" placeholder="Lozinka" /></td>
   </tr>
 </table> 
 	 
@@ -61,7 +64,7 @@ $stmt->close();
         <td><textarea required="required" name="kontakt" rows="3" cols="60" placeholder="Kontak informacije dostupne pri pregledu vaših proizvoda"><?php echo $kontaktK; ?></textarea><br/></td>
       </tr>
       <tr>
-        <td>Županija prodaje</td>
+        <td>Županija prodaje*</td>
         <td>
         	<select name="zupanija">
         	<?php 
@@ -78,14 +81,14 @@ $stmt->close();
 		</td>
       </tr>
       <tr>
-        <td>Mjesto prodaje</td>
+        <td>Mjesto prodaje*</td>
         <td><input type="text" name="mjesto" value="<?php echo $mjestoK; ?>" placeholder="Mjesto"/></td>
       </tr>
     </table> 
 
 	<br/>
 	<br/>
-	<input type="button" onclick="submitForm(this.form)" name="update" value="Spremi promjene"  />
+	<input type="button" class="button_generic" onclick="submitForm(this.form)" name="update" value="Spremi promjene"  />
 	<br/>
     	<div id="form_changesettings_status">
     

@@ -68,8 +68,10 @@ function submitForm(form, id=0)
 	var formData = new FormData(form);
 	var valid = true;
 
+	//	Set initial message and add timer of 10 seconds which clears the status
+	//	on timeout
 	document.getElementById(statusBar).innerHTML="Obrada u tijeku, molimo pričekajte";
-	setTimeout('document.getElementById("'+statusBar+'").innerHTML="";',5000);
+	setTimeout('document.getElementById("'+statusBar+'").innerHTML="";',10000);
 	
 	if (id != 0)
 		formData.append("id", id);
@@ -106,12 +108,20 @@ function submitForm(form, id=0)
 		if (request.readyState==4 && request.status==200)
 		{
 			document.getElementById(statusBar).innerHTML = request.responseText;
-			if (((request.responseText[0] == 'U') || //Uspiješno
-				(request.responseText[0] == 'V')) &&
-				(form.id != "form_changesettings"))	//Vaš proiz...
-				form.reset();
+			var str = request.responseText;
 			
-			if ((form.id == "form_login") && (request.responseText[0] == 'P'))
+			if ((form.id == "form_addproduct") && str.includes("spješn")) {
+				//	Responce text contains 'uspješno'
+				form.reset();
+			}
+			
+			
+			if ((form.id == "form_register") && str.includes("spješn")) {
+				form.reset();
+				setTimeout('window.location.href = "?page=login";',1000);
+			}
+			
+			if ((form.id == "form_login") && str.includes("spješn"))
 				setTimeout('window.location.href = "?page=home";',1000);
 		}
 	}
@@ -243,6 +253,32 @@ function deleteAccount(status)
 	request.send(header);
 }
 
+function fileReport(switcher, id)
+{
+	var request;
+	var header = "report="+switcher+"&id="+id;
+	
+	var response = confirm("Prijaviti "+switcher+" zbog neprikladnog sadržaja?");
+	
+	if (response == false)
+	{
+		return false;
+	}
+	
+	if (window.XMLHttpRequest) request=new XMLHttpRequest();
+	else request=new ActiveXObject("Microsoft.XMLHTTP");
+	
+	request.onreadystatechange=function()
+	{
+		if (request.readyState==4 && request.status==200)
+		{
+			alert(request.responseText);
+		}
+	}
+	request.open("POST","php/report.php",true);
+	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	request.send(header);
+}
 ////////////////////////////////////////////////////////////////////////////////
 ////	Drop-down menu top-right
 ////////////////////////////////////////////////////////////////////////////////
