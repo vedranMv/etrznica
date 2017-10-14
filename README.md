@@ -8,14 +8,14 @@ Shown here is a concept of for web-site that could be used by Croatian producers
 Implementation of this concept encompases both front-end, which should be simple and intuitive for a user to interact with the page, but also a back-end which provides and holds content such as information about registered users or their products.
 
 
-##Front-end
+## Front-end
 ----------------------
 Front end was entirely realized through combination of HTML/CSS/JavaScript. However content was dynamic, controlled by PHP snippets embedded in HTML backbone. Use of JavaScript was minimized to almost exclusively AJAX calls. Few animations that are present were instead implemented through CSS. Design of page is also split in desktop and mobile, and each one is loaded based on the size of the screen of a device rendering the page. Although small, difference is only in appearance of drop-down menus and tool-tips which, on desktops expand on hovering above them, while on phones they are automatically expanded.
 
 ![alt tag](https://hsr.duckdns.org/images/etrznica/desktop.png)
 ![alt tag](https://hsr.duckdns.org/images/etrznica/phone.png)
 
-###Functionality
+### Functionality
 Last version of web-site offered following functionality:
 
 * **_Registration of new users:_** Registration form asks users for email and password together with some contact information used for customers when browsing their products
@@ -26,13 +26,13 @@ Last version of web-site offered following functionality:
 * **_Account password reset:_** Registered users can issue a password-reset email in case they are unable to login with their existing password.
 
 
-##Back-end
+## Back-end
 ----------------------
 Back end portion of this project consists of a MySQL database and a number PHP scripts to manipulate content of database and manage user sessions. A session for user is generated once user logs in and is kept alive for a limited amount of time or until user requests logout.
 
 
 
-###Security consideration
+### Security consideration
 
 * **_Encryption:_** Website is supposed to handle sensitive user data which reacquired a web server hosting it to support TLS encryption
 
