@@ -1,19 +1,24 @@
 @charset "UTF-8";
 
+/*  Formatting of results in search bar */
 @import url("searchResults.css");
+/*  Formatting of product editing   */
 @import url("adminP.css");
+/*  Formatting of standard HTML elements    */
 @import url("stdElements.css");
+/*  Formattign of top-right drop-down   */
+@import url("userPanel.css");
 
 body
 {
     background-image:   url("../imgs/food-sunset-love-field.jpg");
     background-repeat:  no-repeat;
-    color:              #DDD;
-    font-family: fantasy;
-    line-height: 20px;
-    overflow: scroll;
+    color:              #EFEFEF;
+    font-family:        fantasy;
+    line-height:        20px;
+    overflow:           scroll;
 }
-
+/*  Container with image, top-center    */
 #cont_header
 {
     width:              600px;
@@ -22,68 +27,13 @@ body
     margin-right:       auto;
 }
 
-#cont_user
-{
-	float:             right;
-	width:             auto;
-	height:            55px;
-	z-index:           1;
-	background-image:  url("../imgs/black10.png");
-	background-repeat: repeat;
-	margin-top:        -15px;
-	border-radius:     5px;
-	border:            1px dashed #454545;
-	color:             #FFF;
-	padding:           5px;
-	padding-top:       15px;
-	text-align:        center;
-	overflow:          hidden;
-}
-#cont_user:hover
-{
-	height:auto;
-	padding-bottom:0px
-}
-#cont_user > a
-{
-	color:             #454545;
-	text-decoration:   none;
-    display:           block;
-    border-top:        1px dashed #454545;
-}
-
-#cont_user:hover > a
-{
-    width: auto;
-
-}
-#cont_user:hover > a:hover
-{
-    color:              #121212;
-    background-image:   url("../imgs/hover.png");
-    background-repeat:  no-repeat;
-    background-position:center center;
-}
-
-.link_menu
-{
-	padding:   5px;
-	margin:    0px;
-}
-
-.link_menu2
-{
-	padding-top:    10px;
-    padding-bottom: 10px;
-}
-
 #cont_wrapper
 {
 	margins:       auto;
 	width:         auto;
 	height:        auto;
-    border-radius:  10px;
-    min-width: 1200px;
+    border-radius: 10px;
+    min-width:     1200px;
 }
 
 #cont_brzo_trazenje
@@ -92,7 +42,7 @@ body
     border-radius:  10px;
     float:          left;
     min-width:      250px;
-    background-image: url("../imgs/black30.png");
+    background-image: url("../imgs/orange10.png");
 }
 
 	.search_box
@@ -101,6 +51,7 @@ body
 	    margin: 20px;
 	    margin-bottom: 5px ;
 	    font-size: 16px;
+	    background-image: url("../imgs/black30.png");
 	}
 	
 	#cont_rezultati
@@ -115,7 +66,7 @@ body
 #cont_pregled
 {
     border:         1px solid #454545;
-    background-image: url("../imgs/black30.png");
+    background-image: url("../imgs/black20.png");
     border-radius:  10px;
     float:          left;
     margin-left:    20px;
@@ -149,7 +100,7 @@ body
     }
     #form_register > p
     {
-        background-image: url("../imgs/black30.png");
+        background-image: url("../imgs/black10.png");
         padding: 5px;
         margin: 5px;
         text-align: center;
@@ -159,6 +110,33 @@ body
     {
         text-align: left;
     }
+    
+    /*  Tooltip formatting  */
+    .tt_user
+    {
+        position: relative;
+    }
+
+    /*  Declaration of tooltip in desktop/mobile files  */
+       
+    .tt_cont::after
+    {
+        content: "";
+        position: absolute;
+        top: 100%;
+        left: 25%;
+        margin-left: -5px;
+        border-width: 5px;
+        border-style: solid;
+        border-color: #321a00 transparent transparent transparent;
+    }
+    
+    .tt_user:hover .tt_cont
+    {
+        visibility: visible;
+        opacity: 1;
+    }
+   
     
     #subcont_kontakt
     {
@@ -174,16 +152,16 @@ body
 #cont_footer
 {
     border-top:     1px solid #454545;
-    height:         40px;
+    height:         30px;
     width:          100%;
     margin-top:     50px;
     margin-bottom:  -40px;
     text-align:     center;
 }
-
     #cont_footer > a
     {
         display:    inline-block;
         margin:     auto;
+        padding:    5px;
     }
 

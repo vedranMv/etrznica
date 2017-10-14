@@ -1,0 +1,48 @@
+
+
+#cont_user
+{
+    float:             right;
+    width:             auto;
+    height:            auto;
+    z-index:           1;
+    background-image:  url("../imgs/noisyOrange.png");
+    background-repeat: repeat;
+    margin-top:        -15px;
+    border-radius:     5px;
+    border:            1px dashed #2b2e39;
+    color:             #323232;
+    padding:           5px;
+    padding-top:       15px;
+    text-align:        center;
+    overflow:          hidden;
+}
+
+#ts_detect
+{
+    width: 10px;
+}
+
+.tt_cont
+{
+    width:             220px;
+    background-image:  url("../imgs/black30.png");
+    border-radius:     6px;
+    
+    color:         #EFEFEF;
+    text-align:    center;
+    padding:       5px 0;
+    font-size:     11px;
+    font-weight:   normal;
+
+    position:      absolute;
+    bottom:        125%;
+    left:          70%;
+    margin-left:   -60px;
+
+    visibility:    visible;
+    opacity:       1;
+    transition:    opacity 0.5s; 
+}
+    
+    

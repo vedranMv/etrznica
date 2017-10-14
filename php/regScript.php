@@ -101,7 +101,7 @@ if (!(isEmptyStr($email) || isEmptyStr($passwd) || isEmptyStr($passwd2) ||
     
     if ($ret === TRUE) {   //  Successful execution of INSERT query
         //  Save username in cookies, cookie expires after 1 day
-        setcookie($usernameCookie,$email,(time()+24*60*60), '/');
+        setcookie($usernameCookie,$email,(time()+24*60*60), '/', $domainName, TRUE, TRUE);
         $errorMsg .= 'Uspješno ste se registrirali. Sada se možete <a href="?page=login">prijaviti u sustav</a>';
     }
     else {   //  Execution of INSERT query failed

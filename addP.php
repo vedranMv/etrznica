@@ -1,3 +1,8 @@
+<?php 
+require_once "php/sessionManager.php";
+
+if (hasValidSession()) {
+    echo '
 <h2>Dodavanje novih proizvoda u sustav</h2>
 <p>Popunite navedene informacije o proizvodu kojeg nudite i pritisnite tipku "Dodaj proizvod" pri dnu stranice.
 Vaše kontakt informacija koje ste unjeli tijekom registracije će automatski
@@ -31,3 +36,11 @@ biti dodane kod prikazivanja proizvoda.</p>
     	<div id="form_addproduct_status">
     	</div>
 </form>
+';
+    
+} else {
+    include "login.php";
+}
+
+?>
+

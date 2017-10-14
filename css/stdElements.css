@@ -1,18 +1,21 @@
 @charset "UTF-8";
+/**
+ *  Styling of standard HTML elements (buttons, input fields, links...)
+ */
 
 a
 {
     font-family: fantasy;
-     color: #BBB;
+    color: #EFEFEF;
+    text-decoration: none;
 }
 a:visited
 {
-     color: #BBB;
+     color: #EFEFEF;
 }
 a:hover
 {
-     color: #FFF;
-     
+     color: #9A9A9A;
 }
 
 form
@@ -20,16 +23,20 @@ form
     margin-top: 30px;
 }
 
+.link_dash
+{
+	border-bottom: 1px dotted #EFEFEF;
+}
+
 input[type=email], input[type=password], input[type=text], select, textarea
 {
-    background-color: transparent; 
-    background-image: url("../imgs/black30.png");
-    color: #8e949f;
-    border: 1px solid #2b2e39;
-    padding: 5px;
-    border-radius: 5px;
-    color: #DDD;
-    font-size: 14px;
+    background-color:   transparent; 
+    background-image:   url("../imgs/black20.png");
+    color:              #EFEFEF;
+    border:             1px solid #2b2e39;/*#2b2e39*/
+    padding:            5px;
+    border-radius:      5px;
+    font-size:          14px;
 }
 
 .button_important
@@ -40,7 +47,7 @@ input[type=email], input[type=password], input[type=text], select, textarea
     padding-right:15px;
     border-radius: 5px;
     background-color: transparent; 
-    background-image: url("../imgs/black30.png");
+    background-image: url("../imgs/black20.png");
 }
 
 .button_generic
@@ -53,7 +60,12 @@ input[type=email], input[type=password], input[type=text], select, textarea
     padding-right:15px;
     border-radius: 5px;
 	background-color: transparent; 
-    background-image: url("../imgs/black30.png");
+    background-image: url("../imgs/black20.png");
+}
+
+.button_generic:hover
+{
+    text-shadow: 0px 0px 7px #FFF;
 }
 
 .file_generic
@@ -66,5 +78,5 @@ input[type=email], input[type=password], input[type=text], select, textarea
     padding-right:15px;
     border-radius: 5px;
     background-color: transparent; 
-    background-image: url("../imgs/black30.png");
+    background-image: url("../imgs/black20.png");
 }

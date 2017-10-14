@@ -92,7 +92,7 @@ biti potrebno zatražiti novi zahtjev.<p>
         $attempts = $_COOKIE[$attemptCookie];
     }
     //  Set cookie that limits reseting e-mail more than 5 times within 1 hour
-    setcookie($attemptCookie, $attempts + 1, time()+60*60, '/');
+    setcookie($attemptCookie, $attempts + 1, time()+60*60, '/', $domainName, TRUE, TRUE);
     
     if ($attempts < 2) {
         mail($email, $subject, $message, implode("\r\n", $headers));

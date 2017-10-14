@@ -105,7 +105,7 @@ if ($newEmail !== "") {
 if ($newEmail !== getUserCookie()) {
     //  Change value of username in cookies so that session can be validated
     //  (cookie expires after 1 day)
-    setcookie($usernameCookie,$newEmail,(time()+24*60*60), '/');
+    setcookie($usernameCookie,$newEmail,(time()+24*60*60), '/', $domainName, TRUE, TRUE);
     //  If user changes username, performe deauthorization once data is saved to
     //  force user to re-login
     $deauth = TRUE;

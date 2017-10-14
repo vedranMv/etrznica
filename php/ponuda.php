@@ -5,6 +5,9 @@
 require_once "connFile.php";
 require_once "zupLookup.php";
 
+/**
+ * Display all products with name similar to query
+ */
 function filterByNaziv($query)
 {
     global $conHandle, $zupanije;
@@ -42,9 +45,9 @@ function filterByNaziv($query)
         
         echo '
             <div onclick="updateContent('."'".'query='.$param[$count-1]['id'].'&user='.$param[$count-1]['userid']."'".', 1);" class="cont_rezultat_entry">
-            <u>'.$nazivK.'</u>
-            nudi <b>'.$param[$count-1]['nazivP'].'</b>
-            oko <i>'.$zupanije[$zupK].'</i>
+                <span class="cont_uname">'.$nazivK.'</span>:
+                <span class="cont_pname">'.$param[$count-1]['nazivP'].'</span>
+                oko <span class="cont_zup">'.$zupanije[$zupK].'</span>
             </div>';
         $count--;
         $stmt->close();
@@ -53,9 +56,12 @@ function filterByNaziv($query)
     return isset($zupK);
 }
 
+/**
+ * Filter all queries in a municipality simialr to the query
+ */
 function filterByZupanija($query)
 {
-    global $conHandle, $zupanije;;
+    global $conHandle, $zupanije;
     
     //  Find all users in municipalities
     $stmt = $conHandle->prepare("SELECT id, naziv, zupanija FROM korisnici WHERE zupanijaStr LIKE CONCAT('%',?,'%')") or die("3Error binding");
@@ -92,10 +98,59 @@ function filterByZupanija($query)
         {
             echo '
                 <div onclick="updateContent('."'".'query='.$id.'&user='.$param[$count]['userid']."'".', 1);" class="cont_rezultat_entry">
-                <u>'.$param[$count]['naziv'].'</u>
-                 nudi <b>'.$nazivP.'</b>
-                 oko <i>'.$zupanije[ $param[$count]['zup'] ].'</i>
-                 </div>';
+                    <span class="cont_uname">'.$param[$count]['naziv'].'</span>:
+                    <span class="cont_pname">'.$nazivP.'</span>
+                    oko <span class="cont_zup">'.$zupanije[ $param[$count]['zup'] ].'</span>
+                </div>';
+        }
+        $stmt->close();
+        $count--;
+    }
+}
+
+function filterByOsoba($query)
+{
+    global $conHandle, $zupanije;
+    
+    //  Find all users with name similar to query
+    $stmt = $conHandle->prepare("SELECT id, naziv, zupanija FROM korisnici WHERE naziv LIKE CONCAT('%',?,'%')") or die("3Error binding");
+    $stmt->bind_param("s", $query);
+    $stmt->execute();
+    
+    $stmt->bind_result($id, $nazivK, $zupK);
+    
+    $count = 0;
+    $param = array();
+    while($stmt->fetch())
+    {
+        $param[$count] = array();
+        $param[$count]['userid'] = $id;
+        $param[$count]['naziv'] = $nazivK;
+        $param[$count]['zup'] = $zupK;
+        
+        $count++;
+    }
+    $stmt->close();
+    
+    $count--;
+    
+    while($count >= 0)
+    {
+        //  Find all products belonging to userid
+        $stmt = $conHandle->prepare("SELECT id, naziv FROM proizvodi WHERE userid = ? ORDER BY naziv ASC") or die("4Error binding");
+        $stmt->bind_param("i", $param[$count]['userid']);
+        $stmt->execute();
+        
+        $stmt->bind_result($id, $nazivP);
+        
+        while($stmt->fetch())
+        {
+            echo '
+            <div onclick="updateContent('."'".'query='.$id.'&user='.$param[$count]['userid']."'".', 1);" class="cont_rezultat_entry">
+                <span class="cont_uname">'.$param[$count]['naziv'].'</span>:
+                <span class="cont_pname">'.$nazivP.'</span>
+                oko <span class="cont_zup">'.$zupanije[ $param[$count]['zup'] ].'</span>
+            </div>';
         }
         $stmt->close();
         $count--;
@@ -105,9 +160,9 @@ function filterByZupanija($query)
 //  Fetch data sent through POST
 $query = "";
 if (isset($_POST['query'])) {
-    $query = $_POST['query'];
+    $query = urldecode($_POST['query']);
 } else if (isset($GLOBALS["overrideQuery"])) {
-    $query = $GLOBALS["overrideQuery"];
+    $query = urldecode($GLOBALS["overrideQuery"]);
 }
 
 $fil = "";
@@ -129,7 +184,8 @@ if ($fil !== "") {
         goto zupanija;
     } else if ($fil == "osoba") {
         //  TODO: Implement filtering by user's name (not email but name)
-        goto osoba;
+        //goto osoba;
+        filterByOsoba($query);
     }
 }
     
@@ -145,9 +201,7 @@ if ($query != "")
 //  Dirty and quick way of jumping to this section using GOTO when we activate
 //  only a 'zupanija' filter
 zupanija:
-        filterByZupanija($query);
-osoba:
-
-   }
+        filterByZupanija($query); 
+    }
 }
 ?>

@@ -1,0 +1,60 @@
+
+/**
+ *  This is drop-down menu animation, available only on desktops
+ */
+#cont_user
+{
+    float:             right;
+    width:             auto;
+    max-height:        55px; /* Used for animation  */
+    z-index:           1;
+    background-image:  url("../imgs/noisyOrange.png");
+    background-repeat: repeat;
+    margin-top:        -15px;
+    border-radius:     5px;
+    border:            1px dashed #2b2e39;
+    color:             #323232;
+    padding:           5px;
+    padding-top:       15px;
+    text-align:        center;
+    overflow:          hidden;
+    transition:        max-height 0.5s ease-out;
+   -webkit-transition: max-height 0.5s ease-out;  
+}
+
+#cont_user:hover
+{
+    max-height:         500px;
+    padding-bottom:     0px;
+    transition:        max-height 0.5s ease-in;
+   -webkit-transition: max-height 0.5s ease-in;
+}
+
+#ts_detect
+{
+	width: 50px;
+}
+
+.tt_cont
+{
+    width:             220px;
+    background-image:  url("../imgs/black30.png");
+    border-radius:     6px;
+    
+    color:         #EFEFEF;
+    text-align:    center;
+    padding:       5px 0;
+    font-size:     11px;
+    font-weight:   normal;
+
+    position:      absolute;
+    bottom:        125%;
+    left:          70%;
+    margin-left:   -60px;
+
+    visibility:    hidden;
+    opacity:       0;
+    transition:    opacity 0.5s; 
+}
+    
+    

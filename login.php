@@ -5,11 +5,11 @@ global $usernameCookie;
 <form id="form_login"  method="post" action="php/loginScript.php" >
     <table>
     <tr>
-        <td>Email za prijavu</td>
+        <td>Email</td>
         <td><input required="required" onKeyPress="submitByEnter(event, this.form)" type="email" name="email" value="<?php if (isset($_COOKIE[$usernameCookie])) echo getUserDeHashCookie(); ?>" placeholder="Vaša e-mail adressa"/></td>
     </tr>
     <tr>
-        <td>Lozinka za prijavu</td>
+        <td>Lozinka</td>
         <td><input required="required" onKeyPress="submitByEnter(event, this.form)" type="password" name="passwd" placeholder="Lozinka" /></td>
     </tr>
 </table> 
@@ -21,6 +21,6 @@ global $usernameCookie;
 	<div id="form_login_status">
 	</div>
 	<br/>
-	<a href="?page=resetPwd">Zaboravili ste lozinku?</a>
+	<a class="link_dash" href="?page=resetPwd">Zaboravili ste lozinku?</a>
 
 </form>

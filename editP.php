@@ -1,4 +1,15 @@
+<?php 
+//require_once "php/connFile.php";
+//require_once "php/sessionManager.php";
 
+// Check for valid session and obtaiun userid
+$userid = sessionToUID(getUserCookie(), getSessionCookie());
+if ($userid === (-1)){
+    //  If invalid user session return here
+    include "login.php";
+    return;
+} else {
+    echo '
 <h2>Upravljanje vašim postojećim proizvodima</h2>
 <p>Na ovoj stranici možete pregledati svoje postojeće proizvode, obrisati ih ili
 izmjeniti informacije o istima.</p>
@@ -6,17 +17,7 @@ izmjeniti informacije o istima.</p>
 
 <h3>Lista proizvoda</h3>
 <div id="subcont_prodlist">
-
-<?php 
-require_once "php/connFile.php";
-require_once "php/sessionManager.php";
-
-// Check for valid session and obtaiun userid
-$userid = sessionToUID(getUserCookie(), getSessionCookie());
-
-if ($userid === (-1)){
-    //  If invalid user session return here
-    return;
+';
 }
 
 
@@ -40,14 +41,13 @@ while($stmt->fetch())
 if ($count === 0) {
     echo '
     <div class="subcont_proizvodi" >
-        Nemate postavljenih proizvoda, probajte <a href="?page=addP">dodati novi proizvod</a>
+        Nemate postavljenih proizvoda, probajte <a class="link_dash" href="?page=addP">dodati novi proizvod</a>
     </div>';
 }
 
 $stmt->close();
 
-?>
-
+echo '
 </div>
 
 <div id="subcont_prodinfo">
@@ -80,3 +80,8 @@ $stmt->close();
     	</div>
 </form>
 </div>
+';
+
+?>
+
+

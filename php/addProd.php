@@ -14,12 +14,12 @@ require_once "sessionManager.php";
 $nazivP = "";
 //  Chekc for incoming POST arguments
 if (isset($_POST['nazivP'])){
-    $nazivP = $_POST['nazivP'];
+    $nazivP = ucfirst($_POST['nazivP']);
 }
 
 $opisP = "";
 if (isset($_POST['opisP'])) {
-    $opisP = $_POST['opisP'];
+    $opisP = ucfirst($_POST['opisP']);
 }
 
 //  Initialize variables for verifying data type of uploaded picture
@@ -38,8 +38,7 @@ $errorMsg = "";
 
 //  First check for valid session
 $userid = sessionToUID(getUserCookie(), getSessionCookie());
-if ($userid === (-1))
-{
+if ($userid === (-1)) {
     $errorMsg .= "Dogodila se greška s vašom trenutnom sesijom, molimo prijavite se ponovo";
     echo $errorMsg;
     return;

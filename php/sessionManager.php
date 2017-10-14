@@ -92,8 +92,8 @@ function sessionToUID($cookiemail, $cookieSes)
     //  this would technically allow anyone to hijack a session of a logged-out
     //  user by setting sessionCookie to "" and emailCookie to someone elses
     //  email. This check automatically claims all empty-string session invalid.
-    if (isEmptyStr(getSessionCookie())) {
-        return FALSE;
+    if (isEmptyStr(getSessionCookie()) || isEmptyStr($cookieSes)  || isEmptyStr($cookiemail)) {
+        return (-1);
     }
     
     //  Get user ID based on current session (retreived from cookie)
@@ -129,7 +129,7 @@ function hasValidSession()
     //  this would technically allow anyone to hijack a session of a logged-out
     //  user by setting sessionCookie to "" and emailCookie to someone elses 
     //  email. This check automatically claims all empty-string session invalid.
-    if (isEmptyStr(getSessionCookie())) {
+    if (isEmptyStr(getSessionCookie()) || isEmptyStr(getUserCookie())) {
         return FALSE;
     }
     $sessionUID = sessionToUID(getUserCookie(), getSessionCookie());
@@ -155,9 +155,9 @@ function createNewSessionFor($email)
     
     //  Store parameters in cookies
     //Session is valid for 1 hour
-    setcookie($sessionCookie, $session, (time()+60*60),'/');
+    setcookie($sessionCookie, $session, (time()+60*60),'/', $domainName, TRUE, TRUE);
     //Username is saved for 24 hours
-    setcookie($usernameCookie, $email, (time()+24*60*60),'/');
+    setcookie($usernameCookie, $email, (time()+24*60*60),'/', $domainName, TRUE, TRUE);
 
     //  Update user's session in database
     $stmt = $conHandle->prepare("UPDATE korisnici SET session = ? WHERE emailStr = ?") or die("Error binding");
@@ -176,7 +176,7 @@ function destroyCurrentSession()
     
     $emptySession = "";
     //  Kill session stored in a cookie
-    setcookie($sessionCookie, $emptySession, time()-3600*24,'/');
+    setcookie($sessionCookie, $emptySession, time()-3600*24,'/', $domainName, TRUE, TRUE);
     
     //  Update user's session in database
     $stmt = $conHandle->prepare("UPDATE korisnici SET session = ? WHERE emailStr = ?") or die("Error binding");

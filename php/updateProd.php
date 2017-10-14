@@ -18,12 +18,12 @@ if (isset($_POST['id'])) {
 $nazivP = "";
 //  Chekc for incoming POST arguments
 if (isset($_POST['nazivP'])){
-    $nazivP = $_POST['nazivP'];
+    $nazivP = ucfirst($_POST['nazivP']);
 }
 
 $opisP = "";
 if (isset($_POST['opisP'])) {
-    $opisP = $_POST['opisP'];
+    $opisP = ucfirst($_POST['opisP']);
 }
 //  Initialize variables for verifying data type of uploaded picture
 $valid_file_extensions = array();

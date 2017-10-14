@@ -4,7 +4,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * Update content of search engine container on the lft on the window
+ * Update content of search engine container on the left of the window
  * @param arg
  * @param act Switch variable to customize request
  * @returns
@@ -169,8 +169,10 @@ function fetchPdata(id, el)
 
 
 /**
- * Delete user account through AJAX
- * @param status 
+ * Issue deleting request through AJAX (content to be deleted is determined by
+ * the value of 'switcher' variable)
+ * @param switcher Variable to switch between content being deleted through this call
+ * @param pid ID of product being deleted
  * @returns
  */
 function deleteSw(switcher, pid)
@@ -181,7 +183,7 @@ function deleteSw(switcher, pid)
 	var response;
 	var redirect ="";
 	
-	//	Configure arguments for AJAx call
+	//	Configure arguments for AJAX call
 	if (switcher == "account")
 	{
 		response = confirm("Jeste li sigurni da želiti obrisati račun, \n ovaj proces je nepovratan?");
@@ -220,39 +222,11 @@ function deleteSw(switcher, pid)
 }
 
 /**
- * Delete user account through AJAX
- * @param status 
+ * Report product due to inappropriate content (AJAX call)
+ * @param switcher Choose which content is being reported (product/user/...)
+ * @param id ID of content to report
  * @returns
  */
-function deleteAccount(status)
-{
-	var request;
-	var header = "delete=true";
-	
-	var response = confirm("Jeste li sigurni da želiti obrisati račun, \n ovaj proces je nepovratan?");
-	
-	if (response == false)
-	{
-		return false;
-	}
-	
-
-	if (window.XMLHttpRequest) request=new XMLHttpRequest();
-	else request=new ActiveXObject("Microsoft.XMLHTTP");
-	
-	request.onreadystatechange=function()
-	{
-		if (request.readyState==4 && request.status==200)
-		{
-			alert(request.responseText);
-			setTimeout('window.location.href = "?page=home";',1000);
-		}
-	}
-	request.open("POST","php/deleteUser.php",true);
-	request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	request.send(header);
-}
-
 function fileReport(switcher, id)
 {
 	var request;

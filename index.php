@@ -45,17 +45,31 @@ require_once "php/sessionManager.php";
  ?>
  
     <meta charset="UTF-8">
-    <title>Dobrodošli u e-Tržnicu, vašu on-line tržnicu</title>
-    <link href="css/style.css" rel="stylesheet" type="text/css" />
+    <meta name="description" content="Dobrodošli na stranicu e-tržnica. Ovo je besplatna stranica na kojoj možete predstaviti svoje
+domaće proizvode ostalim ljudima ukoliko se bavite proizvodnjom, ili potražiti
+namirnice domaće proizvodnje kao alternativu proizvodima iz velikih trgovačkih
+lanaca.">
+    <title>Dobrodošli u e-tržnicu, vašu on-line tržnicu</title>
+    <link rel="stylesheet" href="css/style.css" type="text/css" />
+    <link rel="stylesheet" href="css/mobile.css" media="screen and (max-device-width: 641px)" />
+	<link rel="stylesheet" href="css/desktop.css" media="screen and (min-device-width: 642px)" />
     <script type="text/javascript" src="js/stdlib.js" ></script>
+    <link rel="icon" type="image/png" href="imgs/favicon.png"/>
+    <script type="text/javascript">
+    	//	This bit extends drop-down in case we're on a touch-screen device
+    	var showCnt = true;
+    	var hideCnt = false;
+    	
+    	setTimeout('if (document.getElementById("ts_detect").clientWidth < 20) { hideCnt = true; alterContent(hideCnt); }', 1000);
+    </script>
 </head>
 
-<body <?php if (!$validSes) { echo 'onmouseenter="alterContent(false);"'; } ?> >
+<body <?php if (!$validSes) { echo 'onmouseenter="alterContent(hideCnt);"'; } ?> >
     <?php 
         //  Switch between login menu and user-menu
         if (!$validSes) {
             echo '
-            <div id="cont_user" onmouseenter="alterContent(true);" onmouseleave="alterContent(false);" style="width:150px;" >
+            <div id="cont_user" onmouseenter="alterContent(showCnt);" onmouseleave="alterContent(hideCnt);" style="width:150px;" >
             	<a class="link_menu2" href="?page=register"> Ponudi svoje proizvode </a>
             </div>
             ';
@@ -74,7 +88,7 @@ require_once "php/sessionManager.php";
         }
     ?>
     <div id="cont_header">
-    	<a href="?page=home"><img alt="" src="imgs/title.png"/></a>
+    	<a href="?page=home"><img alt="e-trznica, ponudi, pregledaj, domaće!" src="imgs/title.png"/></a>
     </div>
     <div style="clear:both;"></div>
     
@@ -128,7 +142,8 @@ require_once "php/sessionManager.php";
     </div>
     
     <div id="cont_footer">
-    	| <a href="?page=info">Informacije</a> | 2017 |
-    
+    	 <a href="?page=info">Informacije</a> | 2017 
+    	 <div id="ts_detect"></div>
+    </div>
 </body>
 </html>

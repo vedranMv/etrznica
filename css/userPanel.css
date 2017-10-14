@@ -1,0 +1,32 @@
+
+
+#cont_user > a
+{
+    color:             #323232;
+    text-decoration:   none;
+    display:           block;
+    border-top:        1px dashed #2b2e39;
+}
+
+#cont_user:hover > a
+{
+    width: auto;
+
+}
+#cont_user:hover > a:hover
+{
+    color:          #454545;
+    text-shadow:    0px 0px 7px #FFF;
+}
+/*  Links while not logged in   */
+.link_menu
+{
+    padding:   5px;
+    margin:    0px;
+}
+/*  Links while logged in   */
+.link_menu2
+{
+    padding-top:    10px;
+    padding-bottom: 10px;
+}
